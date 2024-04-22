@@ -1,6 +1,6 @@
 package org.cyk.solution.question
 
-import kotlin.math.cos
+import kotlin.math.max
 import kotlin.math.min
 
 class SolutionDynamic {
@@ -78,5 +78,23 @@ class SolutionDynamic {
         return dp.last().last()
     }
 
+    //6.整数拆分
+    fun integerBreak(n: Int): Int {
+        //dp[i]: 拆分整数 i，得到的最大乘积
+        //dp[i]: max(dp[i], max(j * (i - j), j * dp[i - j]))
+        //dp[2] = 1 * 1
+        //dp[3] = 1 * 2
+        //dp[4] = 1 * 3 || 2 * 2
+        //dp[5] = 1 * 4 || 2 * 3
+        //dp[6] = 1 * 5 || 2 * 4 || 3 * 3
+        val dp = IntArray(n + 1) { 0 }
+        dp[1] = 1
+        for(i in 2 .. n) {
+            for(j in 1 until  i) {
+                dp[i] = max(dp[i], max(j * (i - j), j * dp[i - j]))
+            }
+        }
+        return dp.last()
+    }
 
 }
