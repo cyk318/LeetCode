@@ -24,5 +24,5 @@ fun main() {
     adapter.write("你好呀")
 }
 
-git config --global user.name "cyk318"
-git config --global user.email chenyikang2022@163.com
+//git config --global user.name "cyk318"
+//git config --global user.email chenyikang2022@163.com
