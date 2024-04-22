@@ -4,6 +4,7 @@ class SDAdapterTF(
     private val tfCard: TFCard
 ): SDCard {
 
+
     override fun read(): String {
         return tfCard.read()
     }
