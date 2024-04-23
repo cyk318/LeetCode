@@ -1,5 +1,6 @@
 package org.cyk.solution.question
 
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -104,12 +105,26 @@ class SolutionDynamic {
         if(sum % 2 == 1) return false
         val cap = sum / 2
         val dp = IntArray(cap + 1)
-        for(i in nums.indices) {
-            for(j in cap downTo nums[i]) {
+        for (i in nums.indices) {
+            for (j in cap downTo nums[i]) {
                 dp[j] = max(dp[j], dp[j - nums[i]] + nums[i])
             }
         }
         return dp[cap] == cap
+    }
+
+    //8.最后一块石头的重量 II
+    fun lastStoneWeightII(stones: IntArray): Int {
+        var sum = 0
+        for (i in stones.indices) sum += stones[i]
+        val cap = sum / 2
+        val dp = IntArray(cap + 1)
+        for (i in stones.indices) {
+            for (j in cap downTo stones[i]) {
+                dp[j] = max(dp[j], dp[j - stones[i]] + stones[i])
+            }
+        }
+        return sum - 2 * dp[cap]
     }
 
 }
