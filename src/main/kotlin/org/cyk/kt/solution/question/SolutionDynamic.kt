@@ -127,4 +127,28 @@ class SolutionDynamic {
         return sum - 2 * dp[cap]
     }
 
+    //9.目标和
+    fun findTargetSumWays(nums: IntArray, target: Int): Int {
+        //假设所有加法对应的总和为: x
+        //那么所有减法对应的总和为: sum - x
+        //要求就是: x - (sum - x) = target
+        //因此 x = (target + sum) / 2
+        //问题就变成了装满容量为 x 的背包，有多少种不同的装法
+        //dp[j]: 装满容量为 j 的背包有多少中不同的装法
+        var sum = 0
+        for (num in nums) sum += num
+        if ((target + sum) % 2 == 1) return 0
+        if (abs(target) > sum) return 0
+
+        val cap = (target + sum) / 2
+        val dp = IntArray(cap + 1)
+        dp[0] = 1
+        for (i in nums.indices) {
+            for (j in cap downTo nums[i]) {
+                dp[j] += dp[j - nums[i]]
+            }
+        }
+        return dp[cap]
+    }
+
 }
