@@ -1,9 +1,8 @@
 package org.cyk.kt.solution.design.processor
 
 data class Album (
-    val title: String,
-    val content: String,
-    val photos: List<String>
+    var title: String,
+    var content: String,
 )
 
 abstract class AlbumProcessor {
@@ -37,7 +36,7 @@ abstract class AlbumProcessor {
 
 }
 
-//文章创建处理器
+//专辑创建处理器
 class AlbumCreateProcessor: AlbumProcessor() {
 
     override fun doProcess(album: Album) {
@@ -47,6 +46,7 @@ class AlbumCreateProcessor: AlbumProcessor() {
 
 }
 
+//专辑修改处理器
 class AlbumEditProcessor: AlbumProcessor() {
 
     override fun doProcess(album: Album) {
@@ -54,4 +54,22 @@ class AlbumEditProcessor: AlbumProcessor() {
         println("update to db")
     }
 
+}
+
+fun main() {
+    val album = Album(
+        title = "Home|Gradle",
+        content = "Build better software, faster. The leading software platform for improving developer productivity. Now supporting Maven, Bazel, sbt, and Gradle build systems."
+    )
+
+    //创建专辑
+    val createProcessor = AlbumCreateProcessor()
+    createProcessor.processAlbum(album)
+
+    println("=========================================")
+
+    //修改专辑
+    album.title = "Maven Good"
+    val editProcessor = AlbumEditProcessor()
+    editProcessor.processAlbum(album)
 }
