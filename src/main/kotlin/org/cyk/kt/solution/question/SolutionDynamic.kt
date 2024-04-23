@@ -97,4 +97,19 @@ class SolutionDynamic {
         return dp.last()
     }
 
+    //7.分割等和子集
+    fun canPartition(nums: IntArray): Boolean {
+        var sum = 0
+        for(num in nums) sum += num
+        if(sum % 2 == 1) return false
+        val cap = sum / 2
+        val dp = IntArray(cap + 1)
+        for(i in nums.indices) {
+            for(j in cap downTo nums[i]) {
+                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i])
+            }
+        }
+        return dp[cap] == cap
+    }
+
 }
