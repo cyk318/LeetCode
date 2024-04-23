@@ -20,7 +20,7 @@ class FollowDecorator(
     override fun display() {
         val title = super.getTitle()
         val content = if(super.getContent().length > 60)
-            super.getContent().substring(0, 60).plus("......")
+            super.getContent().substring(0, 60).plus("...")
         else
             super.getContent()
 
@@ -39,7 +39,7 @@ class VipDecorator(
     override fun display() {
         val title = super.getTitle()
         val content = if(super.getContent().length > 60)
-           super.getContent().substring(0, 60).plus("......")
+           super.getContent().substring(0, 60).plus("...")
         else
            super.getContent()
 
@@ -57,7 +57,7 @@ fun main() {
     //...
     //假设用户未关注对方，但是对方的文章设置了关注才能访问
     //那么此处添加 "关注装饰器"
-    val blog = FollowDecorator(dbBlog)
+    var blog = FollowDecorator(dbBlog)
     //最后给该用户展示
     blog.display()
 }
