@@ -193,10 +193,24 @@ class SolutionDynamic {
         return if(dp[amount] == Int.MAX_VALUE) -1 else dp[amount]
     }
 
+    //13.完全平方数
+    fun numSquares(n: Int): Int {
+        if(n == 1) return 1
+        val dp = IntArray(n + 1) { Int.MAX_VALUE }
+        dp[0] = 0
+        for (i in 1 .. n / 2) {
+            for (j in i * i .. n) {
+                if(dp[j - i * i] == Int.MAX_VALUE) continue
+                dp[j] = min(dp[j], dp[j - i * i] + 1)
+            }
+        }
+        return dp[n]
+    }
+
 }
 
 fun main() {
-    val arr = intArrayOf(1, 2, 3)
+    val arr = intArrayOf(1, 2, 5)
     val s = SolutionDynamic()
-    s.combinationSum4(arr, 4)
+    s.coinChange(arr, 11)
 }
