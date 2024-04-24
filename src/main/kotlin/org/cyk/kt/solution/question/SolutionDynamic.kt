@@ -1,5 +1,6 @@
 package org.cyk.solution.question
 
+import kotlin.contracts.contract
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -162,6 +163,20 @@ class SolutionDynamic {
             }
         }
         return dp[amount]
+    }
+
+    //11.组合总和 Ⅳ
+    fun combinationSum4(nums: IntArray, target: Int): Int {
+        val dp = IntArray(target + 1)
+        dp[0] = 1
+        for (j in 0 .. target) {
+            for (i in nums.indices) {
+                if(j >= nums[i]) {
+                    dp[j] += dp[j - nums[i]]
+                }
+            }
+        }
+        return dp[target]
     }
 }
 
