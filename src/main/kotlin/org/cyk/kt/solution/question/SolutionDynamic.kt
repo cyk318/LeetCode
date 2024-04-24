@@ -151,4 +151,22 @@ class SolutionDynamic {
         return dp[cap]
     }
 
+    //10.零钱兑换 II
+    fun change(amount: Int, coins: IntArray): Int {
+        //dp[j]: 装满容量为 j 的背包有 dp[j] 种方法
+        val dp = IntArray(amount + 1)
+        dp[0] = 1
+        for (i in coins.indices) {
+            for (j in coins[i] .. amount) {
+                dp[j] += dp[j - coins[i]]
+            }
+        }
+        return dp[amount]
+    }
+}
+
+fun main() {
+    val arr = intArrayOf(1, 2, 5)
+    val s = SolutionDynamic()
+    s.change(5, arr)
 }
