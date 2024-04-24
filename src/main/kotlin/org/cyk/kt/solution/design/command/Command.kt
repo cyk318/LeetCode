@@ -10,7 +10,7 @@ interface ArticleCommand<T> {
 }
 
 //具体命令
-//@Service 将来可以通过构造方法注入
+//@Component 将来可以通过构造方法注入
 class CreateArticleCommand(
     private val articleInfoRepo: ArticleInfoRepo,
     private val articleStatRepo: ArticleStatRepo,
@@ -29,7 +29,7 @@ class CreateArticleCommand(
 }
 
 //具体命令
-//@Service 将来可以通过构造方法注入
+//@Component 将来可以通过构造方法注入
 class DeleteArticleCommand(
     private val articleInfoRepo: ArticleInfoRepo,
     private val articleStatRepo: ArticleStatRepo,
@@ -53,6 +53,18 @@ class ArticleCommandInvoker {
 
     fun <T> execute(cmd: ArticleCommand<T>, obj: T) {
         cmd.execute(obj)
+    }
+
+}
+
+//@Service
+class ArticleService(
+    private val articleCommandInvoker: ArticleCommandInvoker,
+    private val createArticleCommand: CreateArticleCommand,
+) {
+
+    fun pub(article: Article) {
+        articleCommandInvoker.execute(createArticleCommand, article)
     }
 
 }
