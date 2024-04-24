@@ -178,10 +178,25 @@ class SolutionDynamic {
         }
         return dp[target]
     }
+
+    //12.零钱兑换
+    fun coinChange(coins: IntArray, amount: Int): Int {
+        //dp[j]: 装满容量为 j 的背包，最少需要的 dp[j] 个硬币
+        val dp = IntArray(amount + 1) { Int.MAX_VALUE }
+        dp[0] = 0
+        for (i in coins.indices) {
+            for (j in coins[i] .. amount) {
+                if(Int.MAX_VALUE == dp[j - coins[i]]) continue
+                dp[j] = min(dp[j], dp[j - coins[i]] + 1)
+            }
+        }
+        return if(dp[amount] == Int.MAX_VALUE) -1 else dp[amount]
+    }
+
 }
 
 fun main() {
-    val arr = intArrayOf(1, 2, 5)
+    val arr = intArrayOf(1, 2, 3)
     val s = SolutionDynamic()
-    s.change(5, arr)
+    s.combinationSum4(arr, 4)
 }
