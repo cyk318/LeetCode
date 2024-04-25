@@ -1,6 +1,5 @@
 package org.cyk.solution.question
 
-import kotlin.contracts.contract
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -225,7 +224,7 @@ class SolutionDynamic {
     }
 
     //15.打家劫舍
-    fun rob(nums: IntArray): Int {
+    fun rob1(nums: IntArray): Int {
         val len = nums.size
         val dp = IntArray(len + 1)
         dp[1] = nums[0]
@@ -233,6 +232,13 @@ class SolutionDynamic {
             dp[i] = max(dp[i - 1], dp[i - 2] + nums[i - 1])
         }
         return dp[len]
+    }
+
+    //16.打家劫舍 II
+    fun rob2(nums: IntArray): Int {
+        val r1 = rob1(nums.copyOfRange(0, nums.size - 1))
+        val r2 = rob1(nums.copyOfRange(1, nums.size))
+        return max(r1, r2)
     }
 
 }
