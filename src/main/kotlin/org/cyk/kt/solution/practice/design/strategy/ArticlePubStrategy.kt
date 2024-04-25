@@ -1,4 +1,4 @@
-package org.cyk.kt.solution.design.strategy
+package org.cyk.kt.solution.practice.design.strategy
 
 
 data class Article (

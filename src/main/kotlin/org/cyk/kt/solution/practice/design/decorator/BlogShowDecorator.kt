@@ -1,4 +1,4 @@
-package org.cyk.kt.solution.design.decorator
+package org.cyk.kt.solution.practice.design.decorator
 
 
 //抽象装饰角色

@@ -1,4 +1,4 @@
-package org.cyk.kt.solution.design.processor
+package org.cyk.kt.solution.practice.design.processor
 
 data class Album (
     var title: String,

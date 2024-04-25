@@ -1,6 +1,6 @@
-package org.cyk.kt.solution.design.command
+package org.cyk.kt.solution.practice.design.command
 
-import org.cyk.kt.solution.design.strategy.Article
+import org.cyk.kt.solution.practice.design.strategy.Article
 
 class ArticleInfoRepo {
     fun save(article: Article) {
