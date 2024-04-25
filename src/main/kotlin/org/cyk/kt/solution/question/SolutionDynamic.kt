@@ -207,10 +207,28 @@ class SolutionDynamic {
         return dp[n]
     }
 
+    //14.单词拆分
+    fun wordBreak(s: String, wordDict: List<String>): Boolean {
+        //dp[i]: 为 ture，表示长度为 i 的字符串可以被拆分一个或多个在 字典 中出现的单词
+        //j < i，if(wordDict.contains(s.substring(j, i) && dp[j]))
+        val len = s.length
+        val dp = BooleanArray(len + 1) { false }
+        dp[0] = true
+        for (i in 1 .. len) {
+            for (j in 0 ..< i) {
+                if(wordDict.contains(s.substring(j, i)) && dp[j]) {
+                    dp[i] = true
+                }
+            }
+        }
+        return dp[len]
+    }
+
 }
 
 fun main() {
-    val arr = intArrayOf(1, 2, 5)
+    val str = "leetcode"
+    val arr = arrayListOf("leet", "code")
     val s = SolutionDynamic()
-    s.coinChange(arr, 11)
+    s.wordBreak(str, arr)
 }
