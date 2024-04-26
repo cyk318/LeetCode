@@ -9,7 +9,7 @@ data class MyTask(
 ): Comparable<MyTask> {
 
     init {
-        time += System.currentTimeMillis()
+        this.time += System.currentTimeMillis()
     }
 
     override fun compareTo(other: MyTask): Int {
@@ -26,15 +26,15 @@ class MyTimer {
 
     init {
         Thread {
-            synchronized(locker) {
-                while(true) {
-                    val task = queue.take()
-                    val taskTime = task.time
+            while(true) {
+                synchronized(locker) {
+                    val myTask = queue.take()
                     val curTime = System.currentTimeMillis()
+                    val taskTime = myTask.time
                     if(curTime >= taskTime) {
-                        pool.submit { task.task.run() }
+                        pool.submit { myTask.task.run() }
                     } else {
-                        queue.put(task)
+                        queue.put(myTask)
                         locker.wait(taskTime - curTime)
                     }
                 }
@@ -42,8 +42,8 @@ class MyTimer {
         }.start()
     }
 
-    fun schedule(task: Runnable, time: Long) {
-        queue.offer(MyTask(task, time))
+    fun submit(task: Runnable, time: Long) {
+        queue.put(MyTask(task, time))
         synchronized(locker) {
             locker.notify()
         }
@@ -53,16 +53,17 @@ class MyTimer {
 
 fun main() {
     val timer = MyTimer()
-    timer.schedule({
-        println("任务3")
-    }, 3000)
-    timer.schedule({
+
+    timer.submit({
         println("任务1")
     }, 1000)
-    timer.schedule({
+    timer.submit({
+        println("任务3")
+    }, 3000)
+    timer.submit({
         println("任务4")
     }, 4000)
-    timer.schedule({
+    timer.submit({
         println("任务2")
     }, 2000)
 }
