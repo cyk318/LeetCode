@@ -34,7 +34,7 @@ class MyTimer {
                     if(curTime >= taskTime) {
                         pool.submit { task.task.run() }
                     } else {
-                        queue.offer(task)
+                        queue.put(task)
                         locker.wait(taskTime - curTime)
                     }
                 }

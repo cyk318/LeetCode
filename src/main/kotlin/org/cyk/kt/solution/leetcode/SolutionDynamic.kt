@@ -241,6 +241,21 @@ class SolutionDynamic {
         return max(r1, r2)
     }
 
+    //17.打家劫舍 III
+    fun rob(root: TreeNode?): Int {
+        val (left, right) = dfs1(root)
+        return max(left, right)
+    }
+
+    private fun dfs1(root: TreeNode?): Pair<Int, Int> {
+        if(root == null) return 0 to 0
+        val left = dfs1(root.left)
+        val right = dfs1(root.right)
+        val cur = root.`val` + left.second + right.second
+        val unCur = max(left.first, left.second) + max(right.first, right.second)
+        return cur to unCur
+    }
+
 }
 
 fun main() {
