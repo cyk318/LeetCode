@@ -271,8 +271,8 @@ class SolutionDynamic {
         return dp[len - 1][0]
     }
 
-    //2.买卖股票的最佳时机 II
-    fun maxProfit(prices: IntArray): Int {
+    //19.买卖股票的最佳时机 II
+    fun maxProfit2(prices: IntArray): Int {
         if(prices.size <= 1) return 0
         val len = prices.size
         val dp = Array(len) {IntArray(2)}
@@ -283,6 +283,24 @@ class SolutionDynamic {
             dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i])
         }
         return dp[len - 1][0]
+    }
+
+    //20.买卖股票的最佳时机 III
+    fun maxProfit(prices: IntArray): Int {
+        if(prices.size <= 1) return 0
+        val len = prices.size
+        val dp = Array(len) { IntArray(4)}
+        dp[0][0] = -prices[0] //第一次持有
+        dp[0][1] = 0 //第一次不持有
+        dp[0][2] = -prices[0] //第二次持有
+        dp[0][3] = 0 //第二次不持有
+        for (i in 1 ..< prices.size) {
+            dp[i][0] = max(dp[i - 1][0], -prices[i])
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + prices[i])
+            dp[i][2] = max(dp[i - 1][2], dp[i - 1][1] - prices[i])
+            dp[i][3] = max(dp[i - 1][3], dp[i - 1][2] + prices[i])
+        }
+        return max(dp[len - 1][1], dp[len - 1][3])
     }
 
 }
