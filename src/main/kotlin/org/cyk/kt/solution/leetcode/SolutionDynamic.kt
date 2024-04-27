@@ -303,6 +303,28 @@ class SolutionDynamic {
         return max(dp[len - 1][1], dp[len - 1][3])
     }
 
+    //21.买卖股票的最佳时机 IV
+    fun maxProfit(k: Int, prices: IntArray): Int {
+        if(prices.size <= 1) return 0
+        val len = prices.size
+        val dp = Array(len) { IntArray(k * 2) }
+        for (i in 0 ..< k * 2) {
+            if(i % 2 == 0) dp[0][i] = -prices[0]
+        }
+        for (i in 1 ..< prices.size) {
+            for(j in 0 ..< k * 2) {
+                if(j == 0) {
+                    dp[i][j] = max(dp[i - 1][j], -prices[i])
+                } else if (j % 2 == 1) {
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - 1] + prices[i])
+                } else {
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - 1] - prices[i])
+                }
+            }
+        }
+        return dp[len - 1][k * 2 - 1]
+    }
+
 }
 
 fun main() {
