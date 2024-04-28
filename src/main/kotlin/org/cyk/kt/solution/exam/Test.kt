@@ -48,6 +48,8 @@ import java.util.*
 //    set.add(arr[i + 1][j + 1])
 //    return false
 //}
+//git config --global http.proxy 127.0.0.1:7897
+//git config --global https.proxy 127.0.0.1:7897
 
 
 private var result = 0
