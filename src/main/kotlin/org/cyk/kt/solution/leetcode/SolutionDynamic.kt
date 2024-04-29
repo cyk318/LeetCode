@@ -365,6 +365,24 @@ class SolutionDynamic {
         return max(dp[len - 1][1], dp[len - 1][2])
     }
 
+
+    //24.最长递增子序列
+    fun lengthOfLIS(nums: IntArray): Int {
+        //dp[i]: 以 i 为结尾的最长递增子序列长度
+        val len = nums.size
+        val dp = IntArray(len) { 1 }
+        var result = 1
+        for (i in 1 ..< len) {
+            for (j in 0 ..< i) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = max(dp[i], dp[j] + 1)
+                }
+            }
+            result = max(result, dp[i])
+        }
+        return result
+    }
+
 }
 
 fun main() {
