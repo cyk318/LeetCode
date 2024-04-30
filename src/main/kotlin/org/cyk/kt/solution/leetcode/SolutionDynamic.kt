@@ -434,7 +434,8 @@ class SolutionDynamic {
         }
         return result
     }
-//最长公共子序列
+
+    //最长公共子序列
     fun longestCommonSubsequence(text1: String, text2: String): Int {
         //dp[i][j]: text1 以第 i - 1 个字符为结尾， text2 以 j - 1 字符为结尾的最长公共子序列
         val len1 = text1.length
@@ -443,6 +444,22 @@ class SolutionDynamic {
         for (i in 1 .. len1) {
             for (j in 1 .. len2) {
                 if (text1[i - 1] == text2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                } else {
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                }
+            }
+        }
+        return dp[len1][len2]
+    }
+
+    fun maxUncrossedLines(nums1: IntArray, nums2: IntArray): Int {
+        val len1 = nums1.size
+        val len2 = nums2.size
+        val dp = Array(len1 + 1) { IntArray(len2 + 1) }
+        for (i in 1 .. len1) {
+            for (j in 1 .. len2) {
+                if (nums1[i - 1] == nums2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1
                 } else {
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
