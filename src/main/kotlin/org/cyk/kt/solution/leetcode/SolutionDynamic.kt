@@ -1,6 +1,7 @@
 package org.cyk.solution.question
 
 import kotlin.concurrent.fixedRateTimer
+import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -433,9 +434,7 @@ class SolutionDynamic {
         }
         return result
     }
-
-
-    //最长公共子序列
+//最长公共子序列
     fun longestCommonSubsequence(text1: String, text2: String): Int {
         //dp[i][j]: text1 以第 i - 1 个字符为结尾， text2 以 j - 1 字符为结尾的最长公共子序列
         val len1 = text1.length
@@ -452,7 +451,6 @@ class SolutionDynamic {
         }
         return dp[len1][len2]
     }
-
 
 }
 
