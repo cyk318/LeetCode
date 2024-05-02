@@ -1,7 +1,5 @@
 package org.cyk.solution.question
 
-import kotlin.concurrent.fixedRateTimer
-import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -481,6 +479,28 @@ class SolutionDynamic {
         for (i in 1 ..< len) {
             dp[i] = max(nums[i], dp[i - 1] + nums[i])
             if (dp[i] > result) result = dp[i]
+        }
+        return result
+    }
+
+    //30.回文子串
+    fun countSubstrings(s: String): Int {
+        //dp[i][j]: 区间 [i, j] 中是回文字串
+        val len = s.length
+        val dp = Array(len) { BooleanArray(len) }
+        var result = 0
+        for (i in len - 1 downTo 0) {
+            for (j in i until len) {
+                if (s[i] == s[j]) {
+                    if (j - i <= 1) {
+                        dp[i][j] = true
+                        result++
+                    } else if (dp[i + 1][j - 1]) {
+                        dp[i][j] = true
+                        result++
+                    }
+                }
+            }
         }
         return result
     }
