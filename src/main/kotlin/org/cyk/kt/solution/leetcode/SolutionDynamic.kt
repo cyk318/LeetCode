@@ -505,6 +505,24 @@ class SolutionDynamic {
         return result
     }
 
+    //31.最长回文子序列
+    fun longestPalindromeSubseq(s: String): Int {
+        //dp[i][j]: 区间 [i, j] 最大回文子序列长度
+        val len = s.length
+        val dp = Array(len) { IntArray(len) }
+        for (i in 0 ..< len) dp[i][i] = 1
+        for (i in len - 1 downTo 0) {
+            for (j in i + 1 ..< len) {
+                if (s[i] == s[j]) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                } else {
+                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+                }
+            }
+        }
+        return dp[0][len - 1]
+    }
+
 }
 
 fun main() {
