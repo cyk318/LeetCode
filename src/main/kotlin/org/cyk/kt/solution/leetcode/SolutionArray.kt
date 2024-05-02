@@ -1,5 +1,6 @@
 package org.cyk.solution.question
 
+import kotlin.math.min
 
 
 class SolutionArray {
@@ -58,6 +59,23 @@ class SolutionArray {
             }
         }
         return result
+    }
+
+    //4.长度最小的子数组
+    fun minSubArrayLen(target: Int, nums: IntArray): Int {
+        var result = Int.MAX_VALUE
+        for (i in nums.indices) {
+            var sum = nums[i]
+            if (sum >= target) return 1
+            for (j in i - 1 downTo 0) {
+                sum += nums[j]
+                if (sum >= target) {
+                    result = min(i - j + 1, result)
+                    break
+                }
+            }
+        }
+        return if (Int.MAX_VALUE == result) 0 else result
     }
 
 }
