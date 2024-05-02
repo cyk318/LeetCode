@@ -22,19 +22,25 @@ class SolutionArray {
     }
 
     //2.移除元素
+//    fun removeElement(nums: IntArray, `val`: Int): Int {
+//        val len = nums.size
+//        //有两种解决思路，一种是搬运元素，比较耗时，还有一种是使用 空间换时间
+//        val list = mutableListOf<Int>()
+//        for (i in 0 ..< len) {
+//            if (nums[i] != `val`) list.add(nums[i])
+//        }
+//        for (i in 0 ..< list.size) {
+//            nums[i] = list[i]
+//        }
+//        return list.size
+//    }
     fun removeElement(nums: IntArray, `val`: Int): Int {
-        val len = nums.size
-        //有两种解决思路，一种是搬运元素，比较耗时，还有一种是使用 空间换时间
-        val list = mutableListOf<Int>()
-        for (i in 0 ..< len) {
-            if (nums[i] != `val`) list.add(nums[i])
+        var result = 0
+        for (i in nums.indices) {
+            if (nums[i] != `val`) nums[result++] = nums[i]
         }
-        for (i in 0 ..< list.size) {
-            nums[i] = list[i]
-        }
-        return list.size
+        return result
     }
-
 
 }
 
