@@ -42,6 +42,24 @@ class SolutionArray {
         return result
     }
 
+    //3.有序数组的平方
+    fun sortedSquares(nums: IntArray): IntArray {
+        var left = 0
+        var rignt = nums.size - 1
+        val result = IntArray(nums.size)
+        var index = nums.size - 1
+        while (left <= rignt) {
+            if (nums[left] * nums[left] < nums[rignt] * nums[rignt]) {
+                result[index--] = nums[rignt] * nums[rignt]
+                rignt--
+            } else {
+                result[index--] = nums[left] * nums[left]
+                left++
+            }
+        }
+        return result
+    }
+
 }
 
 fun main() {
