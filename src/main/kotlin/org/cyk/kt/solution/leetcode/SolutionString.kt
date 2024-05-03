@@ -45,6 +45,20 @@ class SolutionString {
         }
     }
 
+    //3.找出字符串中第一个匹配项的下标
+    fun strStr(haystack: String, needle: String): Int {
+        var left = 0
+        var right = needle.length
+        while (right <= haystack.length) {
+            if (haystack.substring(left, right) == needle) {
+                return left
+            }
+            left++
+            right++
+        }
+        return -1
+    }
+
 }
 
 fun main() {
