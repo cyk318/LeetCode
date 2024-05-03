@@ -1,5 +1,6 @@
 package org.cyk.solution.question
 
+import javax.lang.model.type.ArrayType
 import kotlin.math.min
 
 
@@ -76,6 +77,42 @@ class SolutionArray {
             }
         }
         return if (Int.MAX_VALUE == result) 0 else result
+    }
+
+    //5.螺旋矩阵 II
+    fun generateMatrix(n: Int): Array<IntArray> {
+        val arr = Array(n) { IntArray(n) }
+        var up = 0
+        var down = n - 1
+        var left = 0
+        var right = n - 1
+        var index = 1
+        while (up < down && left < right) {
+            for (i in left .. right) {
+                arr[up][i] = index++
+            }
+            up++
+
+            for (i in up .. down) {
+                arr[i][right] = index++
+            }
+            right--
+
+            for (i in right downTo left) {
+                arr[down][i] = index++
+            }
+            down--
+
+            for (i in down downTo up) {
+                arr[i][left] = index++
+            }
+            left++
+        }
+        if (n % 2 == 1) {
+            val ans = n / 2
+            arr[ans][ans] = index
+        }
+        return arr
     }
 
 }

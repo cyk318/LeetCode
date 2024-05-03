@@ -24,8 +24,8 @@ interface UserRpcService {
 //具体主题(此处为 User 微服务的服务提供者)
 //@Service
 class UserRpcServiceImpl(
-    val userDao: UserDao,
-    val mapper: ObjectMapper,
+    private val userDao: UserDao,
+    private val mapper: ObjectMapper,
 ): UserRpcService {
 
     override fun findUserById(id: Long): String {
@@ -39,8 +39,8 @@ class UserRpcServiceImpl(
 //代理类(此处为 其他微服务处理 User Feign 客户端返回的 Json 数据)
 //@Service
 class UserRpcProxy(
-    val userRpcService: UserRpcService,
-    val mapper: ObjectMapper,
+    private val userRpcService: UserRpcService,
+    private val mapper: ObjectMapper,
 ) {
 
     fun findUserById(id: Long): User {
@@ -49,4 +49,3 @@ class UserRpcProxy(
     }
 
 }
-
