@@ -1,5 +1,7 @@
 package org.cyk.kt.solution.leetcode
 
+import org.cyk.kt.solution.exam.reverse
+
 class SolutionString {
 
     //1.反转字符串
@@ -16,8 +18,37 @@ class SolutionString {
         }
     }
 
+    //2.反转字符串 II
+    fun reverseStr(s: String, k: Int): String {
+        val len = s.length
+        val chs = s.toCharArray()
+        val k2 = k * 2
+        for (i in 0 ..< len step k2) {
+            if (i + k < len) {
+                reverseRange(chs, i, i + k - 1)
+            } else {
+                reverseRange(chs, i, len - 1)
+            }
+        }
+        return String(chs)
+    }
+
+    private fun reverseRange(chs: CharArray, start: Int, end: Int) {
+        var s = start
+        var e = end
+        while (s < e) {
+            val tmp = chs[s]
+            chs[s] = chs[e]
+            chs[e] = tmp
+            s++
+            e--
+        }
+    }
+
 }
 
 fun main() {
-
+    val str = "abcdefg"
+    val s = SolutionString()
+    s.reverseStr(str, 3)
 }
