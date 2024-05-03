@@ -59,6 +59,13 @@ class SolutionString {
         return -1
     }
 
+    //4.重复的子字符串
+    fun repeatedSubstringPattern(s: String): Boolean {
+        var str = s + s
+        str = str.substring(0, str.length)
+        return str.contains(s)
+    }
+
 }
 
 fun main() {
