@@ -1,5 +1,7 @@
 package org.cyk.kt.solution.leetcode
 
+import kotlin.concurrent.timer
+
 class SolutionHash {
 
     //1.有效的字母异位词
@@ -34,8 +36,29 @@ class SolutionHash {
         return result.toIntArray()
     }
 
+    //3.快乐数
+    fun isHappy(n: Int): Boolean {
+        val set = mutableSetOf<Int>()
+        var num = n
+        var sum = 0
+        while (sum != 1) {
+            var tmp = 0
+            while (num != 0) {
+                val ans = num % 10
+                tmp += ans * ans
+                num /= 10
+            }
+            sum = tmp
+            if (set.contains(sum)) return false
+            set.add(sum)
+            num = sum
+        }
+        return true
+    }
+
 }
 
 fun main() {
-
+    val s = SolutionHash()
+    s.isHappy(19)
 }
