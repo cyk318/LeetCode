@@ -18,20 +18,21 @@ class SolutionHash {
         return true
     }
 
-//    fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
-//        val map = IntArray(1001)
-//        val result = mutableListOf<Int>()
-//        for (i in nums1.indices) {
-//            map[nums1[i]] = 1
-//        }
-//        for (i in nums2.indices) {
-//            if (map[nums2[i]] == 1) {
-//                result.add(nums2[i])
-//                map[nums2[i]] = 0
-//            }
-//        }
-//        return result.toIntArray()
-//    }
+    //2.两个数组的交集
+    fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
+        val map = IntArray(1001)
+        val result = mutableListOf<Int>()
+        for (i in nums1.indices) {
+            map[nums1[i]] = 1
+        }
+        for (i in nums2.indices) {
+            if (map[nums2[i]] == 1) {
+                result.add(nums2[i])
+                map[nums2[i]] = 0
+            }
+        }
+        return result.toIntArray()
+    }
 
 }
 
