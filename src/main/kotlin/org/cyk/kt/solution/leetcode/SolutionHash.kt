@@ -67,6 +67,23 @@ class SolutionHash {
         return intArrayOf()
     }
 
+    //7.四数相加II
+    fun fourSumCount(nums1: IntArray, nums2: IntArray, nums3: IntArray, nums4: IntArray): Int {
+        var result = 0
+        val map = mutableMapOf<Int, Int>()
+        for (i in nums1) {
+            for (j in nums2) {
+                map[i + j] = map.getOrDefault(i + j, 0) + 1
+            }
+        }
+        for (i in nums3) {
+            for (j in nums4) {
+                if (map.containsKey(-i - j)) result += map[-i - j]!!
+            }
+        }
+        return result
+    }
+
 }
 
 fun main() {
