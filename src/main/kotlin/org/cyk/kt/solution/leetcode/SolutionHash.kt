@@ -84,9 +84,24 @@ class SolutionHash {
         return result
     }
 
+    //8.赎金信
+    fun canConstruct(ransomNote: String, magazine: String): Boolean {
+        val set = IntArray(26) { 0 }
+        for (ch in magazine) {
+            set[ch - 'a']++
+        }
+        for (ch in ransomNote) {
+            set[ch - 'a']--
+            if (set[ch - 'a'] < 0) {
+                return false
+            }
+        }
+        return true
+    }
+
 }
 
 fun main() {
-    val s = SolutionHash()
-    s.isHappy(19)
+//    val s = SolutionHash()
+//    s.isHappy(19)
 }
