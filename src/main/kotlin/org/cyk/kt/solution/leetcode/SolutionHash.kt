@@ -54,6 +54,19 @@ class SolutionHash {
         return true
     }
 
+    //6.两数之和
+    fun twoSum(nums: IntArray, target: Int): IntArray {
+        //key: 值, value: 下标
+        val map = mutableMapOf<Int, Int>()
+        for (i in nums.indices) {
+            if (map.containsKey(target - nums[i])) {
+                return intArrayOf(map[target - nums[i]]!!, i)
+            }
+            map[nums[i]] = i
+        }
+        return intArrayOf()
+    }
+
 }
 
 fun main() {

@@ -5,8 +5,6 @@ import org.cyk.kt.solution.practice.project.mq.core.MSGQueue
 import org.cyk.kt.solution.practice.project.mq.core.Message
 import java.lang.RuntimeException
 
-
-
 class VirtualHost {
 
     //假设有这些队列
