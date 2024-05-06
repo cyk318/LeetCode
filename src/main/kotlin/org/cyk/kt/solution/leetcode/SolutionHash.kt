@@ -1,5 +1,7 @@
 package org.cyk.kt.solution.leetcode
 
+import org.cyk.kt.solution.exam.isValid
+
 class SolutionHash {
 
     //1.有效的字母异位词
@@ -127,9 +129,42 @@ class SolutionHash {
         return result
     }
 
+    //4.四数之和
+    fun fourSum(nums: IntArray, target: Int): List<List<Int>> {
+        val res = mutableListOf<List<Int>>()
+        nums.sort()
+        if(target < 0 && nums[0] > 0) return res
+        for (i in 0 ..< nums.size - 3) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue
+            val cur1 = nums[i]
+            for (j in i + 1 ..< nums.size - 2) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue
+                val cur2= nums[j]
+                var left = j + 1
+                var right = nums.size - 1
+                while (left < right) {
+                    val sum = cur1 + cur2 + nums[left] + nums[right]
+                    if (sum < target) {
+                        left++
+                    } else if (sum > target) {
+                        right--
+                    } else {
+                        res.add(listOf(cur1, cur2, nums[left], nums[right]))
+                        left++
+                        right--
+                        while (left < right && nums[left] == nums[left - 1]) left++
+                        while (left < right && nums[right] == nums[right + 1]) right--
+                    }
+                }
+            }
+        }
+        return res
+    }
+
 }
 
 fun main() {
-//    val s = SolutionHash()
-//    s.isHappy(19)
+    val s = SolutionHash()
+    val arr = intArrayOf(1,-2,-5,-4,-3,3,3,5)
+    s.fourSum(arr, -11)
 }
