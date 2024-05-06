@@ -99,6 +99,34 @@ class SolutionHash {
         return true
     }
 
+    //9.三数之和
+    fun threeSum(nums: IntArray): List<List<Int>> {
+        val result = mutableListOf<List<Int>>()
+        nums.sort()
+        for (i in 0 ..< nums.size - 2) {
+            if (nums[i] > 0) break
+            if (i > 0 && nums[i] == nums[i - 1]) continue
+            val cur = nums[i]
+            var left = i + 1
+            var right = nums.size - 1
+            while (left < right) {
+                val sum = cur + nums[left] +nums[right]
+                if (sum < 0) {
+                    left++
+                } else if (sum > 0) {
+                    right--
+                } else {
+                    result.add(listOf(cur, nums[left], nums[right]))
+                    left++
+                    right--
+                    while (left < right && nums[left] == nums[left - 1]) left++
+                    while (left < right && nums[right] == nums[right + 1]) right--
+                }
+            }
+        }
+        return result
+    }
+
 }
 
 fun main() {
