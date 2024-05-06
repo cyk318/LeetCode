@@ -5,6 +5,7 @@ import java.io.DataOutputStream
 import java.lang.RuntimeException
 import java.net.ServerSocket
 import java.net.Socket
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 
 class BrokerServer(
@@ -13,9 +14,11 @@ class BrokerServer(
 
     private val socket = ServerSocket(port)
     private val clientPool = Executors.newFixedThreadPool(5)
+
     //key: channelId ,value: Socket
-    //注意：这里的 Channel 只表示一个 "逻辑" 上的连接(创建，销毁 channel)，服务端这边此时没有体现出实质性的作用
-    private val socketMap = mutableMapOf<String, Socket>()
+    //注意：这里的 Channel 只表示一个 "逻辑" 上的连接(创建，销毁 channel)，这个 Map 是为了后台信息统计
+    private val channelSession = ConcurrentHashMap<String, Socket>()
+
     private val virtualHost = VirtualHost()
 
     fun start() {
@@ -51,9 +54,19 @@ class BrokerServer(
         val reqBase = req as ReqBaseArguments
         //3.根据 type 类型执行不同的服务
         val ok = when(type) {
-            1 -> virtualHost.exchangeDeclare(req as ExchangeDeclareReq)
-            2 -> virtualHost.exchangeDelete(req as ExchangeDeleteReq)
-            3 -> virtualHost.queueDeclare(req as QueueDeclareReq)
+            1 -> {
+                channelSession[reqBase.channelId] = client
+                println("[BrokerServer] channel 创建成功！channelId: ${reqBase.channelId}")
+                true
+            }
+            2 -> {
+                channelSession.remove(reqBase.channelId)
+                println("[BrokerServer] channel 销毁成功！channelId: ${reqBase.channelId}")
+                true
+            }
+            3 -> virtualHost.exchangeDeclare(req as ExchangeDeclareReq)
+            4 -> virtualHost.exchangeDelete(req as ExchangeDeleteReq)
+            5 -> virtualHost.queueDeclare(req as QueueDeclareReq)
             //...
             else -> throw RuntimeException("[BrokerServer] 客户端请求 type 非法！type: $type")
         }
