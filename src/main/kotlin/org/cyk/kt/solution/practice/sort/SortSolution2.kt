@@ -32,11 +32,21 @@ class SortSolution2 {
         arr[j] = tmp
     }
 
+    fun bubbleSort(arr: IntArray) {
+        for (i in arr.indices) {
+            for (j in 0 ..< arr.size - i - 1) {
+                if(arr[j] > arr[j + 1]) {
+                    swap(arr, j , j + 1)
+                }
+            }
+        }
+    }
+
 }
 
 fun main() {
     val s = SortSolution2()
     val arr = intArrayOf(3,1,2,5,4,6,1)
-    s.selectSort(arr)
+    s.bubbleSort(arr)
     println(arr.contentToString())
 }
