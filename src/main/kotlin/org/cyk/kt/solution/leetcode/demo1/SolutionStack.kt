@@ -1,11 +1,10 @@
-package org.cyk.solution.question
+package org.cyk.kt.solution.leetcode.demo1
 
 import java.lang.RuntimeException
 import java.lang.StringBuilder
 import java.util.Deque
 import java.util.LinkedList
 import java.util.PriorityQueue
-import java.util.Properties
 import java.util.Queue
 import java.util.Stack
 

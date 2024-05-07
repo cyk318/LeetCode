@@ -1,6 +1,5 @@
-package org.cyk.solution.question
+package org.cyk.kt.solution.leetcode.demo1
 
-import javax.lang.model.type.ArrayType
 import kotlin.math.min
 
 

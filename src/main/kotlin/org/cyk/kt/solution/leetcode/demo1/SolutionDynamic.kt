@@ -1,4 +1,4 @@
-package org.cyk.solution.question
+package org.cyk.kt.solution.leetcode.demo1
 
 import kotlin.math.abs
 import kotlin.math.max

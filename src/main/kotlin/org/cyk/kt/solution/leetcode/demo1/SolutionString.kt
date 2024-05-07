@@ -1,6 +1,4 @@
-package org.cyk.kt.solution.leetcode
-
-import org.cyk.kt.solution.exam.reverse
+package org.cyk.kt.solution.leetcode.demo1
 
 class SolutionString {
 

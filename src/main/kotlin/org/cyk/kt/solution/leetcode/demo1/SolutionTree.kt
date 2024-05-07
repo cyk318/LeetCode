@@ -1,4 +1,4 @@
-package org.cyk.solution.question
+package org.cyk.kt.solution.leetcode.demo1
 
 import java.util.*
 import kotlin.math.abs
@@ -119,9 +119,9 @@ class SolutionTree {
   }
 
   private fun dfs2(
-    root: TreeNode?,
-    strBuild: StringBuilder,
-    list: MutableList<String>
+      root: TreeNode?,
+      strBuild: StringBuilder,
+      list: MutableList<String>
   ) {
     if(root == null) return
     if(root.left == null && root.right == null) {
@@ -146,8 +146,8 @@ class SolutionTree {
   }
 
   private fun dfs3(
-    root: TreeNode?,
-    prev: TreeNode?
+      root: TreeNode?,
+      prev: TreeNode?
   ): Int {
     if(root == null) {
       return 0
