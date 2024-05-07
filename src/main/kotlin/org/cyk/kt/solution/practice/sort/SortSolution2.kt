@@ -1,10 +1,8 @@
 package org.cyk.kt.solution.practice.sort
 
-import org.cyk.kt.solution.leetcode.demo1.SolutionArray
-
 class SortSolution2 {
 
-    fun selectSort(arr: IntArray) {
+    fun insertSort(arr: IntArray) {
         for (i in 1 ..< arr.size) {
             val key = arr[i]
             var j = i - 1
@@ -16,7 +14,23 @@ class SortSolution2 {
         }
     }
 
+    fun selectSort(arr: IntArray) {
+        for (i in arr.indices) {
+            var index = i
+            for (j in i + 1 ..< arr.size) {
+                if (arr[index] > arr[j]) {
+                    index = j
+                }
+            }
+            swap(arr, i, index)
+        }
+    }
 
+    private fun swap(arr: IntArray, i: Int, j: Int) {
+        val tmp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = tmp
+    }
 
 }
 
