@@ -42,11 +42,33 @@ class SortSolution2 {
         }
     }
 
+    fun shellSort(arr: IntArray) {
+        var gap = arr.size
+        while (gap > 1) {
+            gap /= 2
+            shellInsertSort(arr, gap)
+        }
+        shellInsertSort(arr, 1)
+    }
+
+    private fun shellInsertSort(arr: IntArray, gap: Int) {
+        for (i in gap ..< arr.size) {
+            val key = arr[i]
+            var j = i - gap
+            while (j >= 0 && arr[j] > key) {
+                arr[j + gap] = arr[j]
+                j -= gap
+            }
+            arr[j + gap] = key
+        }
+    }
+
+
 }
 
 fun main() {
     val s = SortSolution2()
     val arr = intArrayOf(3,1,2,5,4,6,1)
-    s.bubbleSort(arr)
+    s.shellSort(arr)
     println(arr.contentToString())
 }
