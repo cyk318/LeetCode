@@ -1,5 +1,7 @@
 package org.cyk.kt.solution.practice.sort
 
+import kotlin.system.measureTimeMillis
+
 class SortSolution2 {
 
     fun insertSort(arr: IntArray) {
@@ -63,12 +65,43 @@ class SortSolution2 {
         }
     }
 
+    fun heapSort(arr: IntArray) {
+        createBigHeap(arr)
+        for (i in arr.lastIndex downTo 1) {
+            swap(arr, 0, i)
+            adjustDown(arr, 0, i)
+        }
+    }
+
+    private fun createBigHeap(arr: IntArray) {
+        val len = arr.size
+        for (parent in (len - 1 - 1) / 2 downTo 0) {
+            adjustDown(arr, parent, len)
+        }
+    }
+
+    private fun adjustDown(arr: IntArray, parent: Int, len: Int) {
+        var p = parent
+        var child = p * 2 + 1
+        while (child < len) {
+            if (child + 1 < len && arr[child] < arr[child + 1]) {
+                child++
+            }
+            if (arr[child] > arr[p]) {
+                swap(arr, child, p)
+                p = child
+                child = child * 2 + 1
+            } else  {
+                break
+            }
+        }
+    }
 
 }
 
 fun main() {
     val s = SortSolution2()
     val arr = intArrayOf(3,1,2,5,4,6,1)
-    s.shellSort(arr)
+    s.heapSort(arr)
     println(arr.contentToString())
 }
