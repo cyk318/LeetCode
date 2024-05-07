@@ -30,6 +30,7 @@ open class RespBaseArguments(
 ): Serializable
 
 //主要的请求: 创建交换机、删除交换机、创建队列
+
 data class ExchangeDeclareReq(
     val name: String,
     val type: ExchangeType,

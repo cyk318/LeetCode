@@ -2,6 +2,7 @@ package org.cyk.kt.solution.practice.rpc.demo1
 
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.io.EOFException
 import java.lang.RuntimeException
 import java.net.ServerSocket
 import java.net.Socket
@@ -32,18 +33,28 @@ class BrokerServer(
     }
 
     private fun clientProcess(client: Socket) {
-        client.getInputStream().use { inputStream ->
-            client.getOutputStream().use { outputStream ->
-                DataInputStream(inputStream).use { dataInputStream ->
-                    DataOutputStream(outputStream).use { dataOutputStream ->
-                        while (true) {
-                            val request = readRequest(dataInputStream)
-                            val response = process(request, client)
-                            writeResponse(response, dataOutputStream)
+        println("[BrokerServer] 客户端上线！ip: ${client.inetAddress}, port: ${client.port}")
+        try {
+            client.getInputStream().use { inputStream ->
+                client.getOutputStream().use { outputStream ->
+                    DataInputStream(inputStream).use { dataInputStream ->
+                        DataOutputStream(outputStream).use { dataOutputStream ->
+                            while (true) {
+                                val request = readRequest(dataInputStream)
+                                val response = process(request, client)
+                                writeResponse(response, dataOutputStream)
+                            }
                         }
                     }
                 }
             }
+        } catch (e: EOFException) {
+            println("[BrokerServer] 客户端下线！ip: ${client.inetAddress}, port: ${client.port}")
+        } catch (e: Exception) {
+            println("[BrokerServer] 客户端连接异常！ip: ${client.inetAddress}, port: ${client.port}")
+        } finally {
+            client.close()
+            removeChannelSession(client)
         }
     }
 
@@ -88,6 +99,9 @@ class BrokerServer(
         Request(type, length, payload)
     }
 
+    /**
+     * 将响应写回给客户端
+     */
     private fun writeResponse(response: Response, outputStream: DataOutputStream) = outputStream.run {
         writeInt(response.type)
         writeInt(response.length)
@@ -95,4 +109,19 @@ class BrokerServer(
         flush()
     }
 
+    //删除所有和这个 clientSocket 有关的 Channel
+    private fun removeChannelSession(client: Socket) {
+        val channelIdList = mutableListOf<String>()
+        //这里不能直接删除，会破坏迭代器结构
+        for (entry in channelSession) {
+            if (entry.value == client) channelIdList.add(entry.key)
+        }
+        for (channelId in channelIdList) {
+            channelSession.remove(channelId)
+        }
+    }
+
 }
+
+
+
