@@ -58,7 +58,7 @@ class BrokerServer(
         }
     }
 
-    private fun process(request: Request, client: Socket) = request.run {
+    private fun process(request: Request, client: Socket) = with(request) {
         //1.解析请求
         val req = BinaryTool.bytesToAny(payload)
         //2.获取请求中的 channelId，记录和 Socket 的关系(让每个 channel 都对应自己的 Socket，类似于 Session)
@@ -83,14 +83,15 @@ class BrokerServer(
         }
         //4.返回响应
         val respBase = RespBaseArguments(reqBase.rid, reqBase.channelId, ok)
-        Response(type, length, BinaryTool.anyToBytes(respBase))
+        val payload = BinaryTool.anyToBytes(respBase)
+        Response(type, length, payload)
     }
 
     /**
      * 读取客户端请求
      * 使用 DataInputStream 的主要原因就是有多种读取方式，例如 readInt()、readLong()，这些都是原生 InputStream 没有的
      */
-    private fun readRequest(dataInputStream: DataInputStream) = dataInputStream.run {
+    private fun readRequest(dataInputStream: DataInputStream) = with(dataInputStream) {
         val type = readInt()
         val length = readInt()
         val payload = ByteArray(length)
@@ -102,7 +103,7 @@ class BrokerServer(
     /**
      * 将响应写回给客户端
      */
-    private fun writeResponse(response: Response, outputStream: DataOutputStream) = outputStream.run {
+    private fun writeResponse(response: Response, outputStream: DataOutputStream) = with(outputStream) {
         writeInt(response.type)
         writeInt(response.length)
         write(response.payload)

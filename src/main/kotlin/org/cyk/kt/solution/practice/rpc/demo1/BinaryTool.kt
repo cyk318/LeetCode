@@ -20,7 +20,7 @@ object BinaryTool {
 
     fun bytesToAny(bytes: ByteArray): Any {
         val result: Any
-            ByteArrayInputStream(bytes).use { byteInput ->
+        ByteArrayInputStream(bytes).use { byteInput ->
             ObjectInputStream(byteInput).use { objectInput ->
                 result = objectInput.readObject()
             }

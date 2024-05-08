@@ -2,6 +2,8 @@ package org.cyk.kt.solution.practice.rpc.demo1
 
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.io.EOFException
+import java.io.IOException
 import java.lang.RuntimeException
 import java.net.Socket
 import java.net.SocketException
@@ -35,9 +37,8 @@ class Connection(
              } catch (e: SocketException) {
                  println("[Connection] 客户端正常断开连接")
              } catch (e: Exception) {
+                 println("[Connection] 客户端异常断开连接")
                  e.printStackTrace()
-             } finally {
-                 socket.close()
              }
          }.start()
     }
@@ -53,7 +54,7 @@ class Connection(
 
     fun createChannel(): Channel {
         //1.创建 Channel，保存到 map 种
-        val channelId = "R-${UUID.randomUUID()}"
+        val channelId = "C-${UUID.randomUUID()}"
         val channel = Channel(channelId, this)
         channelMap[channelId] = channel
         //2.告知服务端 Channel 创建
@@ -68,7 +69,7 @@ class Connection(
         val length = readInt()
         val payload = ByteArray(length)
         val n = read(payload)
-        if (n != length) throw RuntimeException("[Connection] 客户端读取请求异常！")
+        if (n != length) throw RuntimeException("[Connection] 客户端读取响应异常！")
         Response(type, length, payload)
     }
 
