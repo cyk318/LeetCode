@@ -2,21 +2,21 @@ package org.cyk.kt.solution.practice.rpc.demo1
 
 import java.io.Serializable
 
-//Socket 通信请求
+//Socket 自定义应用层协议(请求)
 data class Request(
     val type: Int,
     val length: Int,
     val payload: ByteArray,
 ): Serializable
 
-//Socket 通信响应
+//Socket 自定义应用层协议(响应)
 data class Response(
     val type: Int,
     val length: Int,
     val payload: ByteArray,
 ): Serializable
 
-//基本参数(每个请求都会携带的参数)
+//基本参数(每个请求都会携带的参数，这里进行了一个封住)
 open class ReqBaseArguments(
     open val rid: String = "",
     open val channelId: String = "",
@@ -30,7 +30,6 @@ open class RespBaseArguments(
 ): Serializable
 
 //主要的请求: 创建交换机、删除交换机、创建队列
-
 data class ExchangeDeclareReq(
     val name: String,
     val type: ExchangeType,

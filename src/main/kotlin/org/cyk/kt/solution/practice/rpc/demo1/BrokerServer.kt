@@ -49,7 +49,7 @@ class BrokerServer(
                 }
             }
         } catch (e: EOFException) {
-            println("[BrokerServer] 客户端下线！ip: ${client.inetAddress}, port: ${client.port}")
+            println("[BrokerServer] 客户端正常下线！ip: ${client.inetAddress}, port: ${client.port}")
         } catch (e: Exception) {
             println("[BrokerServer] 客户端连接异常！ip: ${client.inetAddress}, port: ${client.port}")
         } finally {
@@ -63,7 +63,7 @@ class BrokerServer(
         val req = BinaryTool.bytesToAny(payload)
         //2.获取请求中的 channelId，记录和 Socket 的关系(让每个 channel 都对应自己的 Socket，类似于 Session)
         val reqBase = req as ReqBaseArguments
-        //3.根据 type 类型执行不同的服务
+        //3.根据 type 类型执行不同的服务(创建 Channel、销毁 Channel、创建交换机、删除交换机...)
         val ok = when(type) {
             1 -> {
                 channelSession[reqBase.channelId] = client
@@ -84,7 +84,7 @@ class BrokerServer(
         //4.返回响应
         val respBase = RespBaseArguments(reqBase.rid, reqBase.channelId, ok)
         val payload = BinaryTool.anyToBytes(respBase)
-        Response(type, length, payload)
+        Response(type, payload.size, payload)
     }
 
     /**

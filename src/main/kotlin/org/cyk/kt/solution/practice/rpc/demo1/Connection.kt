@@ -2,8 +2,6 @@ package org.cyk.kt.solution.practice.rpc.demo1
 
 import java.io.DataInputStream
 import java.io.DataOutputStream
-import java.io.EOFException
-import java.io.IOException
 import java.lang.RuntimeException
 import java.net.Socket
 import java.net.SocketException
@@ -22,7 +20,6 @@ class Connection(
     private val outputStream = socket.getOutputStream()
     private val dataInputStream = DataInputStream(inputStream)
     private val dataOutputStream = DataOutputStream(outputStream)
-
 
     init {
         //此线程负责不停的从服务器这边获取响应
@@ -43,6 +40,10 @@ class Connection(
          }.start()
     }
 
+
+    /**
+     * 将客户端 Connection 接收到的请求，交给对应的 Channel 处理(此时 Channel 还在阻塞等待服务端响应)
+     */
     private fun putRespToChannel(resp: Response) {
         //这里由于不涉及回调，所以每个 type 类型的响应都长一样，就按照一样的方式解析了
         val baseResp = BinaryTool.bytesToAny(resp.payload) as RespBaseArguments
@@ -52,8 +53,10 @@ class Connection(
         channel.notifyResp(baseResp)
     }
 
-    fun createChannel(): Channel {
-        //1.创建 Channel，保存到 map 种
+    /**
+     * 创建 Channel
+     */
+    fun createChannel(): Channel { //1.创建 Channel，保存到 map 种
         val channelId = "C-${UUID.randomUUID()}"
         val channel = Channel(channelId, this)
         channelMap[channelId] = channel
