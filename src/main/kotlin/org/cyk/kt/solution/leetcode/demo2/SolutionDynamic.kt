@@ -1,6 +1,5 @@
 package org.cyk.kt.solution.leetcode.demo2
 
-import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
 
@@ -55,6 +54,24 @@ class SolutionDynamic {
             }
         }
         return dp[m - 1][n - 1]
+    }
+
+    //5.整数拆分
+    fun integerBreak(n: Int): Int {
+        //dp[1] = 1
+        //dp[2] = 1 * 1
+        //dp[3] = 1 * 2
+        //dp[4] = 2 * 2
+        //dp[5] = 2 * 3
+        //dp[i] = max(dp[i], dp[i - j] * j, (i - j) * j)
+        val dp = IntArray(n + 1)
+        dp[1] = 1
+        for (i in 2 .. n) {
+            for (j in 1 ..< i) {
+                dp[i] = max(dp[i], max(dp[i - j] * j, (i - j) * j))
+            }
+        }
+        return dp.last()
     }
 
 }
