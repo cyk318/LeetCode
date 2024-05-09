@@ -1,5 +1,6 @@
 package org.cyk.kt.solution.leetcode.demo2
 
+import kotlin.concurrent.fixedRateTimer
 import kotlin.math.max
 import kotlin.math.min
 
@@ -72,6 +73,20 @@ class SolutionDynamic {
             }
         }
         return dp.last()
+    }
+
+    //6.分割等和子集
+    fun canPartition(nums: IntArray): Boolean {
+        val sum = nums.sum()
+        if (sum % 2 == 1) return false
+        val cap = sum / 2
+        val dp = IntArray(cap + 1)
+        for (i in nums.indices) {
+            for (j in cap downTo nums[i]) {
+                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i])
+            }
+        }
+        return dp[cap] == cap
     }
 
 }
