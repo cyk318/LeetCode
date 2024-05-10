@@ -89,4 +89,18 @@ class SolutionDynamic {
         return dp[cap] == cap
     }
 
+    //7.最后一块石头的重量II
+    fun lastStoneWeightII(stones: IntArray): Int {
+        //2,2,3,2   = 9
+        val sum = stones.sum()
+        val cap = sum / 2
+        val dp = IntArray(cap + 1)
+        for (i in stones.indices) {
+            for (j in cap downTo stones[i]) {
+                dp[j] = max(dp[j], dp[j - stones[i]] + stones[i])
+            }
+        }
+        return sum - 2 * dp[cap]
+    }
+
 }
