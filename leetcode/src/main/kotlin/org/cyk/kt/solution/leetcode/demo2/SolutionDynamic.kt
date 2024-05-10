@@ -1,6 +1,7 @@
 package org.cyk.kt.solution.leetcode.demo2
 
 import kotlin.concurrent.fixedRateTimer
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -101,6 +102,25 @@ class SolutionDynamic {
             }
         }
         return sum - 2 * dp[cap]
+    }
+
+    //8.目标和
+    fun findTargetSumWays(nums: IntArray, target: Int): Int {
+        //x - (sum - x) = target
+        //2x = target + sum
+        //x = (target + sum) / 2
+        val sum = nums.sum()
+        if (sum < abs(target)) return 0
+        if ((sum + target) % 2 == 1) return 0
+        val cap = (target + sum) / 2
+        val dp = IntArray(cap + 1)
+        dp[0] = 1
+        for (i in nums.indices) {
+            for (j in cap downTo nums[i]) {
+                dp[j] += dp[j - nums[i]]
+            }
+        }
+        return dp[cap]
     }
 
 }
