@@ -135,4 +135,16 @@ class SolutionDynamic {
         return dp[amount]
     }
 
+    //10.组合总和 Ⅳ
+    fun combinationSum4(nums: IntArray, target: Int): Int {
+        val dp = IntArray(target + 1)
+        dp[0] = 1
+        for (i in 0 .. target) {
+            for (j in nums.indices) {
+                if (i - nums[j] >= 0) dp[i] = dp[i] + dp[i - nums[j]]
+            }
+        }
+        return dp[target]
+    }
+
 }
