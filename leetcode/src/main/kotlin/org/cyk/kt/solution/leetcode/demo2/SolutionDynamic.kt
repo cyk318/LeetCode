@@ -128,7 +128,7 @@ class SolutionDynamic {
         val dp = IntArray(amount + 1)
         dp[0] = 1
         for (i in coins.indices) {
-            for (j in amount downTo coins[i]) {
+            for (j in coins[i] .. amount) {
                 dp[j] = dp[j] + dp[j - coins[i]]
             }
         }
