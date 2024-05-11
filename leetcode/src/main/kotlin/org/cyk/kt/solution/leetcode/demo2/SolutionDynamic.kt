@@ -123,4 +123,16 @@ class SolutionDynamic {
         return dp[cap]
     }
 
+    //9.零钱兑换 II
+    fun change(amount: Int, coins: IntArray): Int {
+        val dp = IntArray(amount + 1)
+        dp[0] = 1
+        for (i in coins.indices) {
+            for (j in amount downTo coins[i]) {
+                dp[j] = dp[j] + dp[j - coins[i]]
+            }
+        }
+        return dp[amount]
+    }
+
 }
