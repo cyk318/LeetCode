@@ -161,4 +161,17 @@ class SolutionDynamic {
         return if (dp[amount] == Int.MAX_VALUE) -1 else dp[amount]
     }
 
+    //12.完全平方数
+    fun numSquares(n: Int): Int {
+        val dp = IntArray(n + 1) { Int.MAX_VALUE }
+        dp[0] = 0
+        for (i in 1 .. n / 2) {
+            for (j in i * i .. n) {
+                if (dp[j - i * i] == Int.MAX_VALUE) continue
+                dp[j] = min(dp[j], dp[j - i * i] + 1)
+            }
+        }
+        return if (dp[n] == Int.MAX_VALUE) 1 else dp[n]
+    }
+
 }
