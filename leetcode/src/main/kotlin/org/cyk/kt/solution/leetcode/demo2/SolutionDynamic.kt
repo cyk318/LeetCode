@@ -2,6 +2,7 @@ package org.cyk.kt.solution.leetcode.demo2
 
 import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
+import kotlin.math.acos
 import kotlin.math.max
 import kotlin.math.min
 
@@ -145,6 +146,19 @@ class SolutionDynamic {
             }
         }
         return dp[target]
+    }
+
+    //11.零钱兑换
+    fun coinChange(coins: IntArray, amount: Int): Int {
+        val dp = IntArray(amount + 1) { Int.MAX_VALUE }
+        dp[0] = 0
+        for (i in coins.indices) {
+            for (j in coins[i] .. amount) {
+                if (dp[j - coins[i]] == Int.MAX_VALUE) continue
+                dp[j] = min(dp[j], dp[j - coins[i]] + 1)
+            }
+        }
+        return if (dp[amount] == Int.MAX_VALUE) -1 else dp[amount]
     }
 
 }
