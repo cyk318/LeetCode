@@ -174,4 +174,19 @@ class SolutionDynamic {
         return if (dp[n] == Int.MAX_VALUE) 1 else dp[n]
     }
 
+    fun wordBreak(s: String, wordDict: List<String>): Boolean {
+        //dp[i]: 拆分 s 得到的字符串在 wordDict 可以由一个或多个组成
+        val len = s.length
+        val dp = BooleanArray(len) { false }
+        dp[0] = true
+        for (i in 1 .. len) {
+            for (j in 0 ..< i) {
+                if (wordDict.contains(s.substring(j, i)) && dp[j]) {
+                    dp[i] = true
+                }
+            }
+        }
+        return dp[len]
+    }
+
 }
