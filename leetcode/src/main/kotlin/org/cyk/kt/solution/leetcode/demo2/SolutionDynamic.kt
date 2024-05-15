@@ -174,6 +174,7 @@ class SolutionDynamic {
         return if (dp[n] == Int.MAX_VALUE) 1 else dp[n]
     }
 
+    //13.单词拆分
     fun wordBreak(s: String, wordDict: List<String>): Boolean {
         //dp[i]: 拆分 s 得到的字符串在 wordDict 可以由一个或多个组成
         val len = s.length
@@ -189,7 +190,8 @@ class SolutionDynamic {
         return dp[len]
     }
 
-    fun rob(nums: IntArray): Int {
+    //14.打家劫舍
+    fun rob1(nums: IntArray): Int {
         val len = nums.size
         val dp = IntArray(len + 1)
         dp[1] = nums[0]
@@ -198,5 +200,16 @@ class SolutionDynamic {
         }
         return dp.last()
     }
+
+    //15.打家劫舍 II
+    fun rob2(nums: IntArray): Int {
+        if (nums.size == 1) return nums[0]
+        val len = nums.size
+        val robFirst = rob1(nums.copyOfRange(0, len - 1))
+        val robLast = rob1(nums.copyOfRange(1, len))
+        return max(robFirst, robLast)
+    }
+
+
 
 }
