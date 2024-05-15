@@ -6,6 +6,11 @@ import kotlin.math.acos
 import kotlin.math.max
 import kotlin.math.min
 
+ class TreeNode(var `val`: Int) {
+         var left: TreeNode? = null
+         var right: TreeNode? = null
+}
+
 class SolutionDynamic {
 
     //1.斐波那契
@@ -210,6 +215,20 @@ class SolutionDynamic {
         return max(robFirst, robLast)
     }
 
+    //16.打家劫舍 III
+    fun rob3(root: TreeNode?): Int {
+        val result = dfs(root)
+        return max(result.first, result.second)
+    }
 
+    private fun dfs(root: TreeNode?): Pair<Int, Int> {
+        if (root == null) return 0 to 0
+        val left = dfs(root.left)
+        val right = dfs(root.right)
+        //偷当前节点
+        val v1 = root.`val` + left.second + right.second
+        val v2 = max(left.first, left.second) + max(right.first, right.second)
+        return v1 to v2
+    }
 
 }
