@@ -231,7 +231,7 @@ class SolutionDynamic {
         return v1 to v2
     }
 
-    fun maxProfit(prices: IntArray): Int {
+    fun maxProfit1(prices: IntArray): Int {
         //不持有: dp[i][0]: max(dp[i - 1][0], dp[i - 1] + p[i])
         //持有: dp[i][1]: max(dp[i - 1][1], -p[i])
         val len = prices.size
@@ -244,6 +244,20 @@ class SolutionDynamic {
         }
         return dp[len - 1][0]
     }
+
+    fun maxProfit2(prices: IntArray): Int {
+        val len = prices.size
+        val dp = Array(len) { IntArray(2) }
+        dp[0][0] = 0
+        dp[0][1] = -prices[0]
+        for (i in 1 ..< len) {
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i])
+        }
+        return max(dp[len - 1][0], dp[len - 1][1])
+    }
+
+
 
 }
 
