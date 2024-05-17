@@ -231,6 +231,7 @@ class SolutionDynamic {
         return v1 to v2
     }
 
+    //17.买卖股票的最大利润I
     fun maxProfit1(prices: IntArray): Int {
         //不持有: dp[i][0]: max(dp[i - 1][0], dp[i - 1] + p[i])
         //持有: dp[i][1]: max(dp[i - 1][1], -p[i])
@@ -245,6 +246,7 @@ class SolutionDynamic {
         return dp[len - 1][0]
     }
 
+    //18.买卖股票的最大利润II
     fun maxProfit2(prices: IntArray): Int {
         val len = prices.size
         val dp = Array(len) { IntArray(2) }
@@ -257,7 +259,33 @@ class SolutionDynamic {
         return max(dp[len - 1][0], dp[len - 1][1])
     }
 
+    //19.最长递增子序列
+    fun lengthOfLIS(nums: IntArray): Int {
+        //dp[i]: 以 i 为结尾的最长的递增子序列长度
+        val len = nums.size
+        val dp = IntArray(len) { 1 }
+        var result = 1
+        for (i in 1 ..< len) {
+            for (j in 0 ..< i) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = max(dp[i], dp[j] + 1)
+                }
+            }
+            result = max(dp[i], result)
+        }
+        return result
+    }
 
+    //20.最长连续递增子序列
+//    fun findLengthOfLCIS(nums: IntArray): Int {
+//        val len = nums.size
+//        val dp = IntArray(len) { 1 }
+//        var result = 1
+//        for (i in 1 ..< len) {
+//            if (nums[i] < nums[i - 1]) dp[i] = max()
+//        }
+//        return result
+//    }
 
 }
 
