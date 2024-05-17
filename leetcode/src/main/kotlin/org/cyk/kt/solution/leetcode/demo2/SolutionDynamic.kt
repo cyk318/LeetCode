@@ -277,15 +277,16 @@ class SolutionDynamic {
     }
 
     //20.最长连续递增子序列
-//    fun findLengthOfLCIS(nums: IntArray): Int {
-//        val len = nums.size
-//        val dp = IntArray(len) { 1 }
-//        var result = 1
-//        for (i in 1 ..< len) {
-//            if (nums[i] < nums[i - 1]) dp[i] = max()
-//        }
-//        return result
-//    }
+    fun findLengthOfLCIS(nums: IntArray): Int {
+        val len = nums.size
+        val dp = IntArray(len) { 1 }
+        var result = 1
+        for (i in 1 ..< len) {
+            if (nums[i] > nums[i - 1]) dp[i] = dp[i - 1] + 1
+            result = max(dp[i], result)
+        }
+        return result
+    }
 
 }
 
