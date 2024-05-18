@@ -1,5 +1,6 @@
 package org.cyk.kt.solution.leetcode.demo2
 
+import sun.jvm.hotspot.utilities.BitMap
 import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
 import kotlin.math.acos
@@ -288,5 +289,28 @@ class SolutionDynamic {
         return result
     }
 
+    //最后一块石头的重量
+    fun lastStoneWeightII2(stones: IntArray): Int {
+        //2,2,3,2   = 9
+        val sum = stones.sum()
+        val cap = sum / 2
+        val dp = IntArray(cap + 1)
+        for (i in stones.indices) {
+            for (j in cap downTo stones[i]) {
+                dp[j] = max(dp[j], dp[j - stones[i]] + stones[i])
+            }
+        }
+        return sum - 2 * dp[cap]
+    }
+
+    //21.最长重复子数组
+    fun findLength(nums1: IntArray, nums2: IntArray): Int {
+        //TODO
+        return 1
+    }
+
+}
+
+fun main() {
 }
 
