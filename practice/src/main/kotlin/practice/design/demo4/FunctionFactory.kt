@@ -1,7 +1,5 @@
 package practice.design.demo4
 
-import java.lang.RuntimeException
-
 //抽象产品
 interface Car {
 
@@ -45,29 +43,32 @@ class BMW: Car {
 
 }
 
-//具体工厂
-class CarFactory {
+interface CarFactory {
+    fun createCar(): Car
+}
 
-    companion object {
-        fun createCar(type: String)= type.let {
-            when (it) {
-                "SUV" -> SUV()
-                "BMW" -> BMW()
-                else -> throw RuntimeException("car type undefine!")
-            }
-        }
-    }
+class SUVFactory: CarFactory {
+
+    override fun createCar() = SUV()
+
+}
+
+class BMWFactory: CarFactory {
+
+    override fun createCar() = BMW()
 
 }
 
 fun main() {
-    val sCar = CarFactory.createCar("SUV")
-    sCar.start()
-    sCar.honk()
-    sCar.stop()
+    val suvFactory = SUVFactory()
+    val suv = suvFactory.createCar()
+    suv.start()
+    suv.honk()
+    suv.stop()
 
-    val bCar = CarFactory.createCar("BMW")
-    bCar.start()
-    bCar.honk()
-    bCar.stop()
+    val bmwFactory = BMWFactory()
+    val bmw = bmwFactory.createCar()
+    bmw.start()
+    bmw.honk()
+    bmw.stop()
 }
