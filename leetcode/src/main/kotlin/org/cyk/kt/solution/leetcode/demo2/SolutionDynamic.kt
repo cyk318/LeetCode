@@ -1,15 +1,12 @@
 package org.cyk.kt.solution.leetcode.demo2
 
-import sun.jvm.hotspot.utilities.BitMap
-import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
-import kotlin.math.acos
 import kotlin.math.max
 import kotlin.math.min
 
- class TreeNode(var `val`: Int) {
-         var left: TreeNode? = null
-         var right: TreeNode? = null
+class TreeNode(var `val`: Int) {
+    var left: TreeNode? = null
+    var right: TreeNode? = null
 }
 
 class SolutionDynamic {
@@ -305,12 +302,37 @@ class SolutionDynamic {
 
     //21.最长重复子数组
     fun findLength(nums1: IntArray, nums2: IntArray): Int {
-        //TODO
-        return 1
+        val len1 = nums1.size
+        val len2 = nums2.size
+        val dp = Array(len1) { IntArray(len2) }
+        var result = 0
+        for (i in 0 ..< len2) {
+            if (nums1[0] == nums2[i]) dp[0][i] = 1
+            result = max(dp[0][i], result)
+        }
+        for (i in 0 ..< len1) {
+            if (nums1[i] == nums2[0]) dp[i][0] = 1
+            result = max(dp[i][0], result)
+        }
+        for (i in 1 ..< len1) {
+            for (j in 1 ..< len2) {
+                if (nums1[i] == nums2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                }
+                result = max(dp[i][j], result)
+            }
+        }
+        return result
     }
 
 }
 
 fun main() {
+    val a1 = arrayOf(1,2,3,2,1)
+    val a2 = arrayOf(3,2,1,4,7)
+    val s = SolutionDynamic()
+    s.findLength(a1.toIntArray(), a2.toIntArray())
 }
+
+
 
