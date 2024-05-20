@@ -359,6 +359,19 @@ class SolutionDynamic {
         return dp[len1][len2]
     }
 
+    //24.最大子数组和
+    fun maxSubArray(nums: IntArray): Int {
+        //dp[i]: 以 i 为结尾的最大数连续子数组和
+        val len = nums.size
+        val dp = IntArray(len + 1)
+        var result = nums[0]
+        for (i in 1 .. len) {
+            dp[i] = max(dp[i - 1] + nums[i - 1], nums[i - 1])
+            if (dp[i] > result) result = dp[i]
+        }
+        return result
+    }
+
 }
 
 fun main() {
