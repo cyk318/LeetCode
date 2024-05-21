@@ -372,6 +372,7 @@ class SolutionDynamic {
         return result
     }
 
+
 }
 
 fun main() {
