@@ -42,11 +42,25 @@ class SolutionArray {
         return true
     }
 
+    //4.独一无二的出现次数
+    fun uniqueOccurrences(arr: IntArray): Boolean {
+        val set = mutableSetOf<Int>()
+        val map = mutableMapOf<Int, Int>()
+        for (i in arr.indices) {
+            map[arr[i]] = map.getOrElse(arr[i]) { 0 } + 1
+        }
+        for (entry in map) {
+            if (set.contains(entry.value)) return false
+            else set.add(entry.value)
+        }
+        return true
+    }
+
 }
 
 fun main() {
-    val arr = arrayOf(0,3,2,1)
+    val arr = arrayOf(0,3,2,2,3,1)
     val a = SolutionArray()
-    a.validMountainArray(arr.toIntArray())
+    a.uniqueOccurrences(arr.toIntArray())
 }
 
