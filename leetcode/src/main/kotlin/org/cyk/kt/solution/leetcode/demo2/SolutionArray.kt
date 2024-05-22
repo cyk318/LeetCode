@@ -22,11 +22,31 @@ class SolutionArray {
         return result
     }
 
+    //2.有效的山脉数组
+    fun validMountainArray(arr: IntArray): Boolean {
+        val len = arr.size
+        if (len < 3) return false
+        var index = 0
+        if (arr[0] > arr[1]) return false
+        while (index < len) {
+            if (index > 0 && arr[index] == arr[index - 1]) return false
+            if (index > 0 && arr[index] < arr[index - 1]) break
+            index++
+        }
+        if (index == len) return false
+        while (index < len) {
+            if (arr[index] > arr[index - 1])  return false
+            if (arr[index] == arr[index - 1]) return false
+            index++
+        }
+        return true
+    }
+
 }
 
 fun main() {
-    val arr = arrayOf(8,1,2,2,3)
+    val arr = arrayOf(0,3,2,1)
     val a = SolutionArray()
-    a.smallerNumbersThanCurrent(arr.toIntArray())
+    a.validMountainArray(arr.toIntArray())
 }
 
