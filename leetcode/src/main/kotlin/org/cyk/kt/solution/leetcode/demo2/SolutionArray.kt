@@ -70,6 +70,24 @@ class SolutionArray {
         }
     }
 
+    //6.轮转数组
+    fun rotate(nums: IntArray, k: Int): Unit {
+        val ans = k % nums.size
+        reverse(nums, 0, nums.size - 1)
+        reverse(nums, 0, ans - 1)
+        reverse(nums, nums.size - ans - 1, nums.size - 1)
+    }
+
+    fun reverse(nums: IntArray, start: Int, end: Int) {
+        var s = start
+        var e = end
+        while (s < e) {
+            swap(nums, s, e)
+            s++
+            e--
+        }
+    }
+
     private fun swap(nums: IntArray, left: Int, right: Int) {
         val tmp = nums[left]
         nums[left] = nums[right]
