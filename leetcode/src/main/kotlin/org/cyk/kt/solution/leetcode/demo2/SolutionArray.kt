@@ -56,6 +56,26 @@ class SolutionArray {
         return true
     }
 
+    //5.移动零
+    fun moveZeroes(nums: IntArray): Unit {
+        var leftIndex = 0
+        for (i in nums.indices) {
+            if (nums[i] != 0) {
+                swap(nums, leftIndex, i)
+                leftIndex++
+            }
+        }
+        while (leftIndex < nums.size) {
+            nums[leftIndex++] = 0
+        }
+    }
+
+    private fun swap(nums: IntArray, left: Int, right: Int) {
+        val tmp = nums[left]
+        nums[left] = nums[right]
+        nums[right] = tmp
+    }
+
 }
 
 fun main() {
