@@ -1,5 +1,6 @@
 package practice.design.demo4
 
+
 ////抽象组件
 //interface Coffee {
 //
@@ -74,7 +75,7 @@ interface Coffee {
 }
 
 //具体组件
-class SimpleCoffee: Coffee {
+class SimpleCoffee: Coffee, Cloneable {
 
     override fun getDesc(): String = "[simple coffee]"
     override fun getCost(): Double = 6.0
@@ -123,5 +124,6 @@ fun main() {
     println("cost: ${mikeSimpleCoffee.getCost()}")
 
 }
+
 
 
